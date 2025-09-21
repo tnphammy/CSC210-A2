@@ -6,7 +6,41 @@ public class GA_Simulation {
 
   // Use the instructions to identify the class variables, constructors, and methods you need
   public static Random rng;
+  /** The number of Individuals in each generation */
+  protected int n;
+  /** The number of winners (for reproduction purposes) */
+  protected int k;
+  /** The number of rounds for evolution */
+  protected int r;
+  /** The initial size of a chromosome */
+  protected int c_0;
+  /** The maximum size of a chromosome */
+  protected int c_max; 
+  /** The chance per round of a mutation in each gene */
+  protected float m;
+  /** The number of states possible per gene */
+  protected int g;
 
+  /* CONSTRUCTOR */
+  /**
+   * Constructor of a population
+   * @param n The number of Individuals in each generation
+   * @param k The number of winners (for reproduction purposes)
+   * @param r The number of rounds for evolution
+   * @param c_0 The initial size of a chromosome
+   * @param c_max The maximum size of a chromosome
+   * @param m The chance per round of a mutation in each gene
+   * @param g The number of states possible per gene
+   */
+  public GA_Simulation(int n, int k, int r, int c_0, int c_max, float m, int g) {
+    this.n = n;
+    this.k = k;
+    this.r = r;
+    this.c_0 = c_0;
+    this.c_max = c_max;
+    this.m = m;
+    this.g = g;
+  }
 
 
   /** Provided method that prints out summary statistics for a given
