@@ -155,7 +155,7 @@ public class Individual {
         // You can pass rng, as defined above, to your constructors.
         Individual parent1 = new Individual(8, 4, rng);
         Individual parent2 = new Individual(8, 4, rng);
-        Individual i = new Individual(parent1, parent2, 10, 5, 5, rng);
+        Individual i = new Individual(parent1, parent2, 10, 0.01f, 5, rng);
         System.out.println(i);
         System.out.println("I's Fitness Score: " + i.getFitness());
 
