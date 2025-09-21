@@ -15,7 +15,13 @@ public class Individual {
      * @param num_letters The number of letters available to choose from
      */
     public Individual(int c_0, int num_letters, Random rng) {
-
+        // Make an empty ArrayList to represent the chromosome
+        this.chromosome = new ArrayList<Character>(c_0);
+        // Loop randomLetters to generate one gene at a time
+        for (int i = 0; i < c_0; i++) {
+            char newGene = randomLetter(num_letters, rng);
+            this.chromosome.add(newGene);
+        }
     }
 
     /**
@@ -26,6 +32,39 @@ public class Individual {
      * @param m The chances per round of mutation in each gene
      */
     public Individual(Individual parent1, Individual parent2, int c_max, float m, int num_letters, Random rng) {
+        // 1. Make an empty ArrayList to represent the chromosome
+        this.chromosome = new ArrayList<Character>();
+
+        // 2. Get random prefix & suffix length
+        int prefixLength = rng.nextInt(parent1.chromosome.size());
+        int suffixLength = rng.nextInt(parent2.chromosome.size());
+    
+        // 3. Get suffix & prefix => Concatenate them
+        ArrayList<Character> prefix = new ArrayList<Character>(parent1.chromosome.subList(0, prefixLength));
+        ArrayList<Character> suffix = new ArrayList<Character>(parent2.chromosome.subList(suffixLength, parent2.chromosome.size() - 1));
+
+        this.chromosome.addAll(prefix);
+        this.chromosome.addAll(suffix);
+
+        // 4. Check new chromosome size again maximum, trim if necessary
+        if (this.chromosome.size() > c_max) {
+            this.chromosome = (ArrayList<Character>) this.chromosome.subList(0, c_max);
+        }
+
+        // 5. Loop through each gene, determine its mutation
+        for (int i = 0; i < this.chromosome.size(); i++) {
+            // Determine whether this gene should mutate
+            boolean mutationDecision = doesMutate(m, rng);
+            if (mutationDecision == true) {
+                // Generate the new gene
+                char newGene = randomLetter(num_letters, rng);
+                // Replace the old gene
+                this.chromosome.set(i, newGene);
+            }
+            else {
+                continue;
+            }
+        }
     }
 
     /**
@@ -69,7 +108,10 @@ public class Individual {
         Random rng = new Random(System.currentTimeMillis());
 
         // You can pass rng, as defined above, to your constructors.
-        Individual i = new Individual(8, 4, rng);
+        Individual parent1 = new Individual(8, 4, rng);
+        Individual parent2 = new Individual(8, 4, rng);
+        Individual i = new Individual(parent1, parent2, 10, 5, 5, rng);
+        System.out.println(i);
 
     }
 
