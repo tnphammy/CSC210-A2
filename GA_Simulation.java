@@ -6,12 +6,14 @@ public class GA_Simulation {
 
   // Use the instructions to identify the class variables, constructors, and methods you need
   public static Random rng;
+  protected ArrayList<Individual> pop = new ArrayList<>();
   /** The number of Individuals in each generation */
   protected int n;
   /** The number of winners (for reproduction purposes) */
   protected int k;
   /** The number of rounds for evolution */
   protected int r;
+  protected int roundNumber = 0; 
   /** The initial size of a chromosome */
   protected int c_0;
   /** The maximum size of a chromosome */
@@ -42,6 +44,18 @@ public class GA_Simulation {
     this.g = g;
   }
 
+  /**
+   * Initialize the population
+   * @param rng
+   */
+  public void init(Random rng) {
+    // Create n number of Individuals
+    for (int i = 0; i <= n; i++) {
+      Individual newIndividual = new Individual(c_0, g, rng);
+      pop.add(newIndividual);
+    }
+  }
+
 
   /** Provided method that prints out summary statistics for a given
    * generation, based on the information provided
@@ -62,8 +76,8 @@ public class GA_Simulation {
   }
 
   /** Provided method that sorts population by fitness score, best first
-   * @param pop: ArrayList of Individuals in the current generation
-   * @return: Nothing. ArrayList is sorted in place
+   * @param pop ArrayList of Individuals in the current generation
+   * @return Nothing. ArrayList is sorted in place
    */
   public void rankPopulation(ArrayList<Individual> pop) {
     // sort population by fitness
@@ -76,6 +90,63 @@ public class GA_Simulation {
     pop.sort(ranker);
   }
 
+  /**
+   * Evolve current generation to create offspring based on natural selection
+   * @param rng The random seed
+   */
+  public void evolve(Random rng) {
+    // 1. Select top k 
+    ArrayList<Individual> topK = new ArrayList<Individual>(pop.subList(0, k));
+    // 2. Producing offspring from winners (Looped n times for desired population count)
+    for (int i = 0; i <= n; i++) {
+      // Select 2 parents
+      Individual parent1 = topK.get(rng.nextInt(k));
+      Individual parent2 = topK.get(rng.nextInt(k));
+      // Make an offspring from both parents
+      Individual offspring = new Individual(parent1, parent2, c_max, m, g, rng);
+      // UNSURE: Where do I put these children>???? Try adding to current population
+      pop.add(offspring);
+    }
+  }
+
+  /**
+   * Print some statistics about the current generation.  
+   * Specifically, show the fitness of the fittest individual in the generation and its chromosome, 
+   * the kth individual, 
+   * and the least fit (last ranking) individual, 
+   */
+  public void describeGeneration() {
+    // 1. Describe fittest Individual
+    Individual best = this.pop.get(0);
+    int bestFitness = best.getFitness();
+    // 2. Describe kth Individual
+    int kthFitness = this.pop.get(k).getFitness();
+    // 3. Describe least fit Individual
+    int leastFitness = this.pop.get(pop.size() - 1).getFitness();
+    // 4. Print out information
+    printGenInfo(roundNumber, bestFitness, kthFitness, leastFitness, best);
+  }
+
+  /** Runs the entire experiment */
+  public void run() {
+    // INITIAL ROUND
+    // 1. Initialize population
+    init(rng);
+    roundNumber = 1;
+    // 2. Rank the population
+    rankPopulation(pop);
+    // 3. Describe the population
+    describeGeneration();
+
+    // EVOLUTIONARY ROUNDS
+    // Loop evolution r number of times
+    for (int i = 0; i < r - 1; i++) {
+      roundNumber++;
+      evolve(rng);
+      rankPopulation(pop);
+      describeGeneration();
+    }
+  }
 
   public static void main(String[] args) {
     // This first block of code establishes a random seed, which will make
@@ -95,7 +166,8 @@ public class GA_Simulation {
     rng = new Random(seed);
 
     // Write your main below:
-
+    GA_Simulation life = new GA_Simulation(100, 15, 100, 8, 20, 0.01f, 5);
+    life.run();
   }
 
 }
