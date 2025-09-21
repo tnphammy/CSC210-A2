@@ -104,7 +104,7 @@ public class GA_Simulation {
       Individual parent2 = topK.get(rng.nextInt(k));
       // Make an offspring from both parents
       Individual offspring = new Individual(parent1, parent2, c_max, m, g, rng);
-      // UNSURE: Where do I put these children>???? Try adding to current population
+      // Add offspring to current population
       pop.add(offspring);
     }
   }
@@ -166,7 +166,7 @@ public class GA_Simulation {
     rng = new Random(seed);
 
     // Write your main below:
-    GA_Simulation life = new GA_Simulation(100, 15, 100, 8, 20, 0.01f, 5);
+    GA_Simulation life = new GA_Simulation(100, 15, 70, 8, 20, 1, 5);
     life.run();
   }
 

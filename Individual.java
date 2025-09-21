@@ -18,7 +18,7 @@ public class Individual {
         // Make an empty ArrayList to represent the chromosome
         this.chromosome = new ArrayList<Character>(c_0);
         // Loop randomLetters to generate one gene at a time
-        for (int i = 0; i < c_0; i++) {
+        for (int i = 0; i <= c_0; i++) {
             char newGene = randomLetter(num_letters, rng);
             this.chromosome.add(newGene);
         }
@@ -35,13 +35,17 @@ public class Individual {
         // 1. Make an empty ArrayList to represent the chromosome
         this.chromosome = new ArrayList<Character>();
 
-        // 2. Get random prefix & suffix length
-        int prefixLength = rng.nextInt(parent1.chromosome.size());
-        int suffixLength = rng.nextInt(parent2.chromosome.size());
-    
+        // 2. Get random prefix & suffix index
+        int bound1 = parent1.chromosome.size();
+        int bound2 = parent2.chromosome.size();
+        int prefixLength = rng.nextInt(bound1 - 1) + 1;
+        int suffixLength = rng.nextInt(bound2 - 1) + 1;
+        System.out.println("pre and suff length: " + prefixLength + " " + suffixLength);
+
         // 3. Get suffix & prefix => Concatenate them
+        int toIndex = parent2.chromosome.size() - suffixLength; // Get correct indices for slicing suffix
         ArrayList<Character> prefix = new ArrayList<Character>(parent1.chromosome.subList(0, prefixLength));
-        ArrayList<Character> suffix = new ArrayList<Character>(parent2.chromosome.subList(suffixLength, parent2.chromosome.size() - 1));
+        ArrayList<Character> suffix = new ArrayList<Character>(parent2.chromosome.subList(toIndex, parent2.chromosome.size()));
 
         this.chromosome.addAll(prefix);
         this.chromosome.addAll(suffix);

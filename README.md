@@ -2,15 +2,15 @@
 
 Your readme should include the following information. Each student needs to submit all of this information themselves, even when pair programming. 
 
-Group Members:
+Group Members: N/A
 
-Any peers and/or TAs/Tutors you collaborated with:
+Any peers and/or TAs/Tutors you collaborated with: N/A
 
-Would you like to give "kudos" to anyone who was particularly supportive or helpful?
+Would you like to give "kudos" to anyone who was particularly supportive or helpful? N/A
 
-Cite any references used:
+Cite any references used: https://www.w3schools.com/java/java_ref_arraylist.asp, https://stackoverflow.com/questions/16644811/converting-a-sublist-of-an-arraylist-to-an-arraylist, https://stackoverflow.com/questions/63342254/how-can-i-compare-two-chars
 
-If you used AI, please describe how you used it and what the experienc taught you:
+If you used AI, please describe how you used it and what the experience taught you: N/A
 
 
 ## Questions
