@@ -48,7 +48,7 @@ public class Individual {
 
         // 4. Check new chromosome size again maximum, trim if necessary
         if (this.chromosome.size() > c_max) {
-            this.chromosome = (ArrayList<Character>) this.chromosome.subList(0, c_max);
+            this.chromosome = new ArrayList<Character>(this.chromosome.subList(0, c_max));
         }
 
         // 5. Loop through each gene, determine its mutation
@@ -100,7 +100,52 @@ public class Individual {
         return builder.toString();
     }
 
-
+    /**
+     * Calculates the fitness of an Individual by analyzing
+     * its chromosome composition
+     * @return The Individual's fitness score
+     */
+    public int getFitness() {
+        int fitnessScore = 0; // Default score
+        // 1. Examine mirroring
+        // Make pointers
+        int l = 0;
+        int r = this.chromosome.size() - 1;
+        // Loop through chromosome
+        while (l <= r) {
+            char left = this.chromosome.get(l);
+            char right = this.chromosome.get(r);
+            // If pair matches => +1
+            if (left == right) {
+                fitnessScore++; // Also accounts for if the chromosome has odd length
+            }
+            // If pair does not match => -1
+            else {
+                fitnessScore--;
+            }
+            // Increment the pointers accordingly
+            l++;
+            r--;
+        }
+        // 2. Compare preceding elememnts
+        // Make pointers
+        int f = 0;
+        int s = 1;
+        // Loop through chromosome
+        while (s < this.chromosome.size()) {
+            char first = this.chromosome.get(f);
+            char second = this.chromosome.get(s);
+            // If pair matches => -1
+            if (first == second) {
+                fitnessScore--;
+            }
+            // Increment pointers
+            f++; 
+            s++;
+        }
+        // 3. Return total fitness score
+        return fitnessScore;
+    }
 
 
     public static void main(String[] args) {
@@ -112,6 +157,7 @@ public class Individual {
         Individual parent2 = new Individual(8, 4, rng);
         Individual i = new Individual(parent1, parent2, 10, 5, 5, rng);
         System.out.println(i);
+        System.out.println("I's Fitness Score: " + i.getFitness());
 
     }
 
