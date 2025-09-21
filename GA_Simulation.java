@@ -166,7 +166,10 @@ public class GA_Simulation {
     rng = new Random(seed);
 
     // Write your main below:
-    GA_Simulation life = new GA_Simulation(100, 15, 70, 8, 20, 1, 5);
+    // GA_Simulation life = new GA_Simulation(100, 20, 70, 8, 20, 0.01f, 5);
+    // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 0.01f, 5);
+    // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 1, 5);
+    GA_Simulation life = new GA_Simulation(100, 15, 100, 8, 20, 0.01f, 5);
     life.run();
   }
 

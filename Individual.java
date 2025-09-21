@@ -40,7 +40,6 @@ public class Individual {
         int bound2 = parent2.chromosome.size();
         int prefixLength = rng.nextInt(bound1 - 1) + 1;
         int suffixLength = rng.nextInt(bound2 - 1) + 1;
-        System.out.println("pre and suff length: " + prefixLength + " " + suffixLength);
 
         // 3. Get suffix & prefix => Concatenate them
         int toIndex = parent2.chromosome.size() - suffixLength; // Get correct indices for slicing suffix
