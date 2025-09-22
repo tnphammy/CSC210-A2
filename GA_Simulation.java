@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class GA_Simulation {
 
-  // Use the instructions to identify the class variables, constructors, and methods you need
+  // Use the instructions to identify the class variables, constructors, and
+  // methods you need
   public static Random rng;
   protected ArrayList<Individual> pop = new ArrayList<>();
   /** The number of Individuals in each generation */
@@ -13,11 +14,11 @@ public class GA_Simulation {
   protected int k;
   /** The number of rounds for evolution */
   protected int r;
-  protected int roundNumber = 0; 
+  protected int roundNumber = 0;
   /** The initial size of a chromosome */
   protected int c_0;
   /** The maximum size of a chromosome */
-  protected int c_max; 
+  protected int c_max;
   /** The chance per round of a mutation in each gene */
   protected float m;
   /** The number of states possible per gene */
@@ -26,13 +27,14 @@ public class GA_Simulation {
   /* CONSTRUCTOR */
   /**
    * Constructor of a population
-   * @param n The number of Individuals in each generation
-   * @param k The number of winners (for reproduction purposes)
-   * @param r The number of rounds for evolution
-   * @param c_0 The initial size of a chromosome
+   * 
+   * @param n     The number of Individuals in each generation
+   * @param k     The number of winners (for reproduction purposes)
+   * @param r     The number of rounds for evolution
+   * @param c_0   The initial size of a chromosome
    * @param c_max The maximum size of a chromosome
-   * @param m The chance per round of a mutation in each gene
-   * @param g The number of states possible per gene
+   * @param m     The chance per round of a mutation in each gene
+   * @param g     The number of states possible per gene
    */
   public GA_Simulation(int n, int k, int r, int c_0, int c_max, float m, int g) {
     this.n = n;
@@ -46,9 +48,8 @@ public class GA_Simulation {
 
   /**
    * Initialize the population
-   * @param rng
    */
-  public void init(Random rng) {
+  public void init() {
     // Create n number of Individuals
     for (int i = 0; i <= n; i++) {
       Individual newIndividual = new Individual(c_0, g, rng);
@@ -56,14 +57,15 @@ public class GA_Simulation {
     }
   }
 
-
-  /** Provided method that prints out summary statistics for a given
+  /**
+   * Provided method that prints out summary statistics for a given
    * generation, based on the information provided
-   * @param roundNumber: Which round of evolution are we on, from 0 to n
-   * @param bestFitness: Fitness of top-ranked (most fit) individual
-   * @param kthFitness: Fitness of kth-ranked individual
+   * 
+   * @param roundNumber:  Which round of evolution are we on, from 0 to n
+   * @param bestFitness:  Fitness of top-ranked (most fit) individual
+   * @param kthFitness:   Fitness of kth-ranked individual
    * @param leastFitness: Fitness of lowest-ranked (least fit) individual
-   * @param best: Individual with highest fitness
+   * @param best:         Individual with highest fitness
    * @return: Nothing, prints statistics to standard out
    */
   private void printGenInfo(int roundNumber, int bestFitness, int kthFitness, int leastFitness, Individual best) {
@@ -75,7 +77,9 @@ public class GA_Simulation {
     System.out.println(); // blank line to match the example format
   }
 
-  /** Provided method that sorts population by fitness score, best first
+  /**
+   * Provided method that sorts population by fitness score, best first
+   * 
    * @param pop ArrayList of Individuals in the current generation
    * @return Nothing. ArrayList is sorted in place
    */
@@ -84,7 +88,7 @@ public class GA_Simulation {
     Comparator<Individual> ranker = new Comparator<>() {
       // this order will sort higher scores at the front
       public int compare(Individual c1, Individual c2) {
-        return (int)Math.signum(c2.getFitness()-c1.getFitness());
+        return (int) Math.signum(c2.getFitness() - c1.getFitness());
       }
     };
     pop.sort(ranker);
@@ -92,12 +96,14 @@ public class GA_Simulation {
 
   /**
    * Evolve current generation to create offspring based on natural selection
+   * 
    * @param rng The random seed
    */
-  public void evolve(Random rng) {
-    // 1. Select top k 
+  public void evolve() {
+    // 1. Select top k
     ArrayList<Individual> topK = new ArrayList<Individual>(pop.subList(0, k));
-    // 2. Producing offspring from winners (Looped n times for desired population count)
+    // 2. Producing offspring from winners (Looped n times for desired population
+    // count)
     for (int i = 0; i <= n; i++) {
       // Select 2 parents
       Individual parent1 = topK.get(rng.nextInt(k));
@@ -110,10 +116,11 @@ public class GA_Simulation {
   }
 
   /**
-   * Print some statistics about the current generation.  
-   * Specifically, show the fitness of the fittest individual in the generation and its chromosome, 
-   * the kth individual, 
-   * and the least fit (last ranking) individual, 
+   * Print some statistics about the current generation.
+   * Specifically, show the fitness of the fittest individual in the generation
+   * and its chromosome,
+   * the kth individual,
+   * and the least fit (last ranking) individual,
    */
   public void describeGeneration() {
     // 1. Describe fittest Individual
@@ -131,7 +138,7 @@ public class GA_Simulation {
   public void run() {
     // INITIAL ROUND
     // 1. Initialize population
-    init(rng);
+    init();
     roundNumber = 1;
     // 2. Rank the population
     rankPopulation(pop);
@@ -142,7 +149,7 @@ public class GA_Simulation {
     // Loop evolution r number of times
     for (int i = 0; i < r - 1; i++) {
       roundNumber++;
-      evolve(rng);
+      evolve();
       rankPopulation(pop);
       describeGeneration();
     }
@@ -153,7 +160,7 @@ public class GA_Simulation {
     // it easier to test your code. The output should remain consistent if the
     // seed is the same. To run with a specific seed, you can run from the
     // command line like:
-    //                    java GA_Simulation 24601
+    // java GA_Simulation 24601
 
     long seed = System.currentTimeMillis(); // default
     if (args.length > 0) {
@@ -170,7 +177,10 @@ public class GA_Simulation {
     // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 0.01f, 5);
     // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 1, 5);
     GA_Simulation life = new GA_Simulation(100, 15, 100, 8, 20, 0.01f, 5);
+    System.out.println("Population size: " + life.pop.size());
     life.run();
+    System.out.println("Population size: " + life.pop.size());
+    System.out.println("First creature: " + life.pop.get(0));
   }
 
 }
