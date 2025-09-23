@@ -79,9 +79,8 @@ public class GA_Simulation {
 
   /**
    * Provided method that sorts population by fitness score, best first
-   * 
+   * return Nothing. ArrayList is sorted in place
    * @param pop ArrayList of Individuals in the current generation
-   * @return Nothing. ArrayList is sorted in place
    */
   public void rankPopulation(ArrayList<Individual> pop) {
     // sort population by fitness
@@ -96,8 +95,6 @@ public class GA_Simulation {
 
   /**
    * Evolve current generation to create offspring based on natural selection
-   * 
-   * @param rng The random seed
    */
   public void evolve() {
     // 1. Select top k
@@ -106,7 +103,7 @@ public class GA_Simulation {
     ArrayList<Individual> newGen = new ArrayList<Individual>(n);
     // 3. Producing offspring from winners (Looped n times for desired population
     // count)
-    for (int i = 0; i <= n; i++) {
+    for (int i = 0; i < n; i++) {
       // Select 2 parents
       Individual parent1 = topK.get(rng.nextInt(k));
       Individual parent2 = topK.get(rng.nextInt(k));
