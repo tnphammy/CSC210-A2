@@ -7,7 +7,7 @@ public class GA_Simulation {
   // Use the instructions to identify the class variables, constructors, and
   // methods you need
   public static Random rng;
-  protected ArrayList<Individual> pop = new ArrayList<>();
+  protected ArrayList<Individual> population = new ArrayList<>();
   /** The number of Individuals in each generation */
   protected int n;
   /** The number of winners (for reproduction purposes) */
@@ -53,7 +53,7 @@ public class GA_Simulation {
     // Create n number of Individuals
     for (int i = 0; i <= n; i++) {
       Individual newIndividual = new Individual(c_0, g, rng);
-      pop.add(newIndividual);
+      population.add(newIndividual);
     }
   }
 
@@ -101,8 +101,10 @@ public class GA_Simulation {
    */
   public void evolve() {
     // 1. Select top k
-    ArrayList<Individual> topK = new ArrayList<Individual>(pop.subList(0, k));
-    // 2. Producing offspring from winners (Looped n times for desired population
+    ArrayList<Individual> topK = new ArrayList<Individual>(population.subList(0, k));
+    // 2. Make a new generation
+    ArrayList<Individual> newGen = new ArrayList<Individual>(n);
+    // 3. Producing offspring from winners (Looped n times for desired population
     // count)
     for (int i = 0; i <= n; i++) {
       // Select 2 parents
@@ -110,9 +112,11 @@ public class GA_Simulation {
       Individual parent2 = topK.get(rng.nextInt(k));
       // Make an offspring from both parents
       Individual offspring = new Individual(parent1, parent2, c_max, m, g, rng);
-      // Add offspring to current population
-      pop.add(offspring);
+      // Add offspring to new population
+      newGen.add(offspring);
     }
+    // 4. Replace old pop with new pop
+    population = newGen;
   }
 
   /**
@@ -122,14 +126,14 @@ public class GA_Simulation {
    * the kth individual,
    * and the least fit (last ranking) individual,
    */
-  public void describeGeneration() {
+  public void describeGeneration(int roundNumber) {
     // 1. Describe fittest Individual
-    Individual best = this.pop.get(0);
+    Individual best = this.population.get(0);
     int bestFitness = best.getFitness();
     // 2. Describe kth Individual
-    int kthFitness = this.pop.get(k).getFitness();
+    int kthFitness = this.population.get(k).getFitness();
     // 3. Describe least fit Individual
-    int leastFitness = this.pop.get(pop.size() - 1).getFitness();
+    int leastFitness = this.population.get(population.size() - 1).getFitness();
     // 4. Print out information
     printGenInfo(roundNumber, bestFitness, kthFitness, leastFitness, best);
   }
@@ -141,17 +145,17 @@ public class GA_Simulation {
     init();
     roundNumber = 1;
     // 2. Rank the population
-    rankPopulation(pop);
+    rankPopulation(population);
     // 3. Describe the population
-    describeGeneration();
+    describeGeneration(roundNumber);
 
     // EVOLUTIONARY ROUNDS
     // Loop evolution r number of times
     for (int i = 0; i < r - 1; i++) {
       roundNumber++;
       evolve();
-      rankPopulation(pop);
-      describeGeneration();
+      rankPopulation(population);
+      describeGeneration(roundNumber);
     }
   }
 
@@ -177,10 +181,10 @@ public class GA_Simulation {
     // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 0.01f, 5);
     // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 1, 5);
     GA_Simulation life = new GA_Simulation(100, 15, 100, 8, 20, 0.01f, 5);
-    System.out.println("Population size: " + life.pop.size());
+    System.out.println("Population size: " + life.population.size());
     life.run();
-    System.out.println("Population size: " + life.pop.size());
-    System.out.println("First creature: " + life.pop.get(0));
+    System.out.println("Population size: " + life.population.size());
+    System.out.println("First creature: " + life.population.get(0));
   }
 
 }
