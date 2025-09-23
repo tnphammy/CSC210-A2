@@ -6,7 +6,9 @@ public class GA_Simulation {
 
   // Use the instructions to identify the class variables, constructors, and
   // methods you need
+  /** Random seed */
   public static Random rng;
+  /** The list of all Individuals in the current generation */
   protected ArrayList<Individual> pop = new ArrayList<>();
   /** The number of Individuals in each generation */
   protected int n;
@@ -14,6 +16,7 @@ public class GA_Simulation {
   protected int k;
   /** The number of rounds for evolution */
   protected int r;
+  /** The current round number */
   protected int roundNumber = 1;
   /** The initial size of a chromosome */
   protected int c_0;
