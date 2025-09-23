@@ -83,6 +83,7 @@ public class GA_Simulation {
   /**
    * Provided method that sorts population by fitness score, best first
    * return Nothing. ArrayList is sorted in place
+   * 
    * @param pop ArrayList of Individuals in the current generation
    */
   public void rankPopulation(ArrayList<Individual> pop) {
@@ -180,7 +181,8 @@ public class GA_Simulation {
     // GA_Simulation life = new GA_Simulation(100, 20, 70, 8, 20, 0.01f, 5);
     // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 0.01f, 5);
     // GA_Simulation life = new GA_Simulation(100, 15, 60, 8, 20, 1, 5);
-    GA_Simulation life = new GA_Simulation(100, 15, 100, 8, 20, 0.01f, 5);
+    GA_Simulation life = new GA_Simulation(1000, 10, 100, 10, 30, 0.05f, 5);
+    rng = new Random(8394);
     System.out.println("Population size: " + life.pop.size());
     life.run();
     System.out.println("Population size: " + life.pop.size());
